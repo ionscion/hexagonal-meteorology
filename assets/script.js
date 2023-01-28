@@ -14,13 +14,23 @@ function getApi() {
     .then(function (data) {
       console.log(data);
       console.log(data.main.temp);
-
-      let createTableRow = document.createElement("tr");
-      let tableData = document.createElement("td");
-      tableBody.textContent = "";
-      tableData.textContent = `Current temperature in Denver is: ${data.main.temp}F`;
-      createTableRow.appendChild(tableData);
-      tableBody.appendChild(createTableRow);
+      //changed for loop to 1, data.length didn't work
+      for (let i = 0; i < 1; i++) {
+        let createTableRow = document.createElement('tr');
+        let tempData = document.createElement('td');
+        tempData.textContent = `Temperature: ${data.main.temp} F`;
+        createTableRow.appendChild(tempData);
+      
+        let cityData = document.createElement('td');
+        cityData.textContent = `City: ${data.name}`;
+        createTableRow.appendChild(cityData);
+      
+        let descriptionData = document.createElement('td');
+        descriptionData.textContent = `Conditions: ${data.weather[0].description}`;
+        createTableRow.appendChild(descriptionData);
+      
+        tableBody.appendChild(createTableRow);
+      }
     });
 }
 
