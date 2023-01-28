@@ -9,3 +9,8 @@ header {
 body {
     background-color: darkgray;
 }
+
+table {
+    display: flex;
+    flex-direction: column;
+  }
