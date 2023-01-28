@@ -1,5 +1,6 @@
 let tableBody = document.getElementById("weather-table");
 let fetchButton = document.getElementById("fetch-button");
+let searchButton = document.getElementById("search-submit");
 let day1 = document.getElementById("day-1");
 let day2 = document.getElementById("day-2");
 let day3 = document.getElementById("day-3");
@@ -8,9 +9,6 @@ let day5 = document.getElementById("day-5");
 let currentDay = dayjs().format("YYYY-MM-DD");
 
 function getApi() {
-  //   WHEN I view current weather conditions for that city
-  //   THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the wind speed
-
   let forecastUrl =
     "https://api.openweathermap.org/data/2.5/forecast?lat=39.739&lon=-104.984&appid=326e6d35f7ebe093972477e3b80624aa&units=imperial";
   let requestUrl2 =
@@ -58,7 +56,7 @@ function getApi() {
         createWind.textContent = `Wind Speed: ${data.wind.speed} mph`;
         createWindRow.appendChild(createWind);
         createTableRow.appendChild(createWindRow);
-        
+
         //humidity
         let createHumidRow = document.createElement("tr");
         let createHumidity = document.createElement("td");
@@ -122,4 +120,35 @@ function getApi() {
     });
 }
 
-fetchButton.addEventListener("click", getApi);
+let stateCode = "colorado";
+
+function getCityApi() {
+  let cityInput = document.getElementById("city-input");
+  
+  cityInput = cityInput.value;
+  let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},${stateCode},US&limit=5&appid=326e6d35f7ebe093972477e3b80624aa`;
+
+  fetch(cityUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+
+      for (let i = 0; i < data.length; i++) {
+        const returnedName = data[i].name.toLowerCase();
+        if (cityInput.toLowerCase().includes(returnedName)) {
+          console.log("city matches exactly");
+        } else {
+          console.log("no city was found!");
+        }
+      }
+    });
+  cityInput.value = "";
+}
+searchButton.addEventListener("click", getCityApi);
+
+// fetchButton.addEventListener("click", getApi);
+
+//need function for getting user input in city search and then calling the API for that selection
+//need to use local storage to save past city search history
