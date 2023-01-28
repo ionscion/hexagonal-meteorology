@@ -45,42 +45,48 @@ function getApi() {
     })
     .then(function (data) {
       console.log(data);
-
-      for (let i = 0; i < 1; i++) {
+      let filteredData = data.list.filter((item, index) => {
+        return index > 0 && (index + 1) % 8 === 0 && index < 40;
+      });
+      console.log(filteredData);
+      for (let i = 0; i < 5; i++) {
         // const element = data[i];
+        let currentId = document.getElementById(`day-${i + 1}`);
         let createTableRow = document.createElement("tr");
         //date
         let createDateRow = document.createElement("tr");
         let createDate = document.createElement("td");
-        createDate.textContent = `Date: ${data.list[i].dt_txt}`;
+        createDate.textContent = `Date: ${filteredData[i].dt_txt.slice(0,11)}`;
         createDateRow.appendChild(createDate);
         createTableRow.appendChild(createDateRow);
-        //icon how to incorporate?
+        //icon 
         let createIconRow = document.createElement("tr");
-        let createIcon = document.createElement("td");
-        createIcon.textContent = `${data.list[i].weather[0].icon}`;
+        let getIconText = filteredData[i].weather[0].icon;
+        let createIcon = document.createElement("img");
+        createIcon.src = `http://openweathermap.org/img/wn/${getIconText}@2x.png`;
+        createIconRow.appendChild(createIcon);
         createIconRow.appendChild(createIcon);
         createTableRow.appendChild(createIconRow);
         //temp
         let createTempRow = document.createElement("tr");
         let createTemp = document.createElement("td");
-        createTemp.textContent = `Temperature: ${data.list[i].main.temp} Degrees F`;
+        createTemp.textContent = `Temperature: ${filteredData[i].main.temp} F`;
         createTempRow.appendChild(createTemp);
         createTableRow.appendChild(createTempRow);
         //wind speed
         let createWindRow = document.createElement("tr");
         let createWind = document.createElement("td");
-        createWind.textContent = `Wind Speed: ${data.list[i].wind.speed} mph`;
+        createWind.textContent = `Wind Speed: ${filteredData[i].wind.speed} mph`;
         createWindRow.appendChild(createWind);
         createTableRow.appendChild(createWindRow);
         //humidity
         let createHumidRow = document.createElement("tr");
         let createHumidity = document.createElement("td");
-        createHumidity.textContent = `Humidity: ${data.list[i].main.humidity} %`;
+        createHumidity.textContent = `Humidity: ${filteredData[i].main.humidity} %`;
         createHumidRow.appendChild(createHumidity);
         createTableRow.appendChild(createHumidRow);
 
-        day1.appendChild(createTableRow);
+        currentId.appendChild(createTableRow);
       }
     });
 }
