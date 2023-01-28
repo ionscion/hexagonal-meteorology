@@ -35,9 +35,14 @@
           </div>
         </div>
       </form>
-      <div class="container m-3 p-3 border border-primary">
-        Placeholder for Selected Weather data
-      </div>
+      <table class="card-body table mx-auto my-4">
+        <thead>
+          <tr>
+            <th>Selected Weather Data</th>
+          </tr>
+        </thead>
+        <tbody id="weather-table" class="mx-auto text-center"></tbody>
+      </table>
     </div>
     <div class="container-fluid row d-flex">
         <h2>5 Day Forecast</h2>
@@ -96,6 +101,8 @@
               </blockquote>
             </div>
           </div>
+
+          <button type="button" id="fetch-button" class="btn btn-primary w-50 col">API</button>
     </div>
   </body>
   <script src="./assets/script.js"></script>
