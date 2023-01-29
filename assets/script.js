@@ -7,12 +7,12 @@ let day3 = document.getElementById("day-3");
 let day4 = document.getElementById("day-4");
 let day5 = document.getElementById("day-5");
 let currentDay = dayjs().format("YYYY-MM-DD");
+let lattitude = [];
+let longitude =[];
 
-function getApi() {
-  let forecastUrl =
-    "https://api.openweathermap.org/data/2.5/forecast?lat=39.739&lon=-104.984&appid=326e6d35f7ebe093972477e3b80624aa&units=imperial";
-  let requestUrl2 =
-    "https://api.openweathermap.org/data/2.5/weather?lat=39.739&lon=-104.984&appid=326e6d35f7ebe093972477e3b80624aa&units=imperial";
+function getApi(param1, param2) {
+  let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lattitude}&lon=${longitude}&appid=326e6d35f7ebe093972477e3b80624aa&units=imperial`;
+  let requestUrl2 = `https://api.openweathermap.org/data/2.5/weather?lat=${lattitude}&lon=${longitude}&appid=326e6d35f7ebe093972477e3b80624aa&units=imperial`;
 
   fetch(requestUrl2)
     .then(function (response) {
@@ -85,7 +85,7 @@ function getApi() {
         //date
         let createDateRow = document.createElement("tr");
         let createDate = document.createElement("td");
-        createDate.textContent = `Date: ${filteredData[i].dt_txt.slice(0)}`;
+        createDate.textContent = `Date: ${filteredData[i].dt_txt.slice(0,11)}`;
         createDateRow.appendChild(createDate);
         createTableRow.appendChild(createDateRow);
         //icon
@@ -118,15 +118,18 @@ function getApi() {
         currentId.appendChild(createTableRow);
       }
     });
+    lattitude=[];
+    longitude=[];
 }
-
-let stateCode = "colorado";
 
 function getCityApi() {
   let cityInput = document.getElementById("city-input");
+  const dropdownItems = document.querySelector(".dropdown-menu");
+  let selectedState = document.getElementById("state-input");
   
   cityInput = cityInput.value;
-  let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},${stateCode},US&limit=5&appid=326e6d35f7ebe093972477e3b80624aa`;
+  selectedState = selectedState.value;
+  let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},${selectedState},US&limit=5&appid=326e6d35f7ebe093972477e3b80624aa`;
 
   fetch(cityUrl)
     .then(function (response) {
@@ -139,12 +142,20 @@ function getCityApi() {
         const returnedName = data[i].name.toLowerCase();
         if (cityInput.toLowerCase().includes(returnedName)) {
           console.log("city matches exactly");
+          lattitude.push(data[0].lat);
+          longitude.push(data[0].lon);
+          console.log(`${lattitude},${longitude}`);
         } else {
           console.log("no city was found!");
         }
       }
+      getApi(lattitude, longitude);
+    })
+    .catch(function (error) {
+      console.error("There was a problem with the fetch operation:", error);
     });
   cityInput.value = "";
+  selectedState.value = "";
 }
 searchButton.addEventListener("click", getCityApi);
 
@@ -152,3 +163,6 @@ searchButton.addEventListener("click", getCityApi);
 
 //need function for getting user input in city search and then calling the API for that selection
 //need to use local storage to save past city search history
+
+//need to clear fields upon submission of new data
+//local storage

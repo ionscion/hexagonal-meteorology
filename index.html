@@ -25,21 +25,27 @@
             <label for="city-search" class="form-label"
               >Search for a City</label
             >
-            <input type="city" class="form-control" id="city-input" />
+            <input type="city" class="form-control" id="city-input" required/>
+            <label for="state-search" class="form-label"
+              >Enter State</label
+            >
+            <input type="city" class="form-control" id="state-input" required/>
             <div class="dropdown">
               <button
                 class="btn btn-secondary dropdown-toggle"
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
+                role="button"
               >
                 Select State
               </button>
+              
               <ul class="dropdown-menu">
-                <li><button class="dropdown-item">Alabama</button></li>
-                <li><button class="dropdown-item">Alaska</button></li>
+                <li><button class="dropdown-item" role="button">Alabama</button></li>
+                <li><button class="dropdown-item" role="button">Alaska</button></li>
                 <li>
-                  <button class="dropdown-item">Colorado</button>
+                  <button class="dropdown-item" role="button">Colorado</button>
                 </li>
               </ul>
             </div>
