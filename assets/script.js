@@ -11,6 +11,7 @@ let lattitude = [];
 let longitude =[];
 
 function getApi(param1, param2) {
+    clearPage();
   let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lattitude}&lon=${longitude}&appid=326e6d35f7ebe093972477e3b80624aa&units=imperial`;
   let requestUrl2 = `https://api.openweathermap.org/data/2.5/weather?lat=${lattitude}&lon=${longitude}&appid=326e6d35f7ebe093972477e3b80624aa&units=imperial`;
 
@@ -124,7 +125,6 @@ function getApi(param1, param2) {
 
 function getCityApi() {
   let cityInput = document.getElementById("city-input");
-  const dropdownItems = document.querySelector(".dropdown-menu");
   let selectedState = document.getElementById("state-input");
   
   cityInput = cityInput.value;
@@ -159,10 +159,17 @@ function getCityApi() {
 }
 searchButton.addEventListener("click", getCityApi);
 
+function clearPage() {
+    tableBody.textContent = "";
+    for (let i = 0; i < 5; i++) {
+        let currentId = document.getElementById(`day-${i + 1}`);
+        currentId.textContent = "";
+}
+}
+
 // fetchButton.addEventListener("click", getApi);
 
-//need function for getting user input in city search and then calling the API for that selection
 //need to use local storage to save past city search history
 
 //need to clear fields upon submission of new data
-//local storage
+

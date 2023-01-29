@@ -1,16 +1,25 @@
+* {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
 header {
     display: flex;
     justify-content: flex-end;
     padding: 1em;
-    background-color: blueviolet;
     color:aliceblue;
+    background: linear-gradient(blue, blueviolet);
 }
 
 body {
-    background-color: darkgray;
+    background-color: #7B7372;
 }
 
 table {
     display: flex;
     flex-direction: column;
   }
+
+h2 {
+    color: aliceblue;
+}
+
