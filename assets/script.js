@@ -8,10 +8,10 @@ let day4 = document.getElementById("day-4");
 let day5 = document.getElementById("day-5");
 let currentDay = dayjs().format("YYYY-MM-DD");
 let lattitude = [];
-let longitude =[];
+let longitude = [];
 
 function getApi(param1, param2) {
-    clearPage();
+  clearPage();
   let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lattitude}&lon=${longitude}&appid=326e6d35f7ebe093972477e3b80624aa&units=imperial`;
   let requestUrl2 = `https://api.openweathermap.org/data/2.5/weather?lat=${lattitude}&lon=${longitude}&appid=326e6d35f7ebe093972477e3b80624aa&units=imperial`;
 
@@ -86,7 +86,7 @@ function getApi(param1, param2) {
         //date
         let createDateRow = document.createElement("tr");
         let createDate = document.createElement("td");
-        createDate.textContent = `Date: ${filteredData[i].dt_txt.slice(0,11)}`;
+        createDate.textContent = `Date: ${filteredData[i].dt_txt.slice(0, 11)}`;
         createDateRow.appendChild(createDate);
         createTableRow.appendChild(createDateRow);
         //icon
@@ -119,16 +119,19 @@ function getApi(param1, param2) {
         currentId.appendChild(createTableRow);
       }
     });
-    lattitude=[];
-    longitude=[];
+  lattitude = [];
+  longitude = [];
 }
 
-function getCityApi() {
+function getCityApi(e) {
+  e.preventDefault();
   let cityInput = document.getElementById("city-input");
   let selectedState = document.getElementById("state-input");
-  
+
   cityInput = cityInput.value;
   selectedState = selectedState.value;
+  searchSave(cityInput, selectedState);
+
   let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},${selectedState},US&limit=5&appid=326e6d35f7ebe093972477e3b80624aa`;
 
   fetch(cityUrl)
@@ -160,11 +163,21 @@ function getCityApi() {
 searchButton.addEventListener("click", getCityApi);
 
 function clearPage() {
-    tableBody.textContent = "";
-    for (let i = 0; i < 5; i++) {
-        let currentId = document.getElementById(`day-${i + 1}`);
-        currentId.textContent = "";
+  tableBody.textContent = "";
+  for (let i = 0; i < 5; i++) {
+    let currentId = document.getElementById(`day-${i + 1}`);
+    currentId.textContent = "";
+  }
 }
+//prevent duplicates
+// do search
+function searchSave(city, state) {
+  let citySearches = JSON.parse(localStorage.getItem("city-searches")) || [];
+  citySearches.push(`${city},${state}`);
+  localStorage.setItem("city-searches", JSON.stringify(citySearches));
+
+//write the searches to the html box
+//search button
 }
 
 // fetchButton.addEventListener("click", getApi);
@@ -172,4 +185,3 @@ function clearPage() {
 //need to use local storage to save past city search history
 
 //need to clear fields upon submission of new data
-
