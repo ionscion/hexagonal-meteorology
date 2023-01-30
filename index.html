@@ -22,22 +22,20 @@
       <div
         class="d-flex justify-content-around border border-light rounded bg-opacity-10 m-3"
       >
-        <div class="card">
+        <div class="card p-3 m-3">
           <div class="card-header">Recent Searches</div>
           <div class="card-body">
             <ul class="card-text" id="recent-searches">
             </ul>
-            <button class="btn btn-primary">Search</button>
+            <button class="btn btn-primary p-2">Search</button>
           </div>
         </div>
         <div class="card p-3 m-3">
           <form>
-            <div class="card-header text-center">New Search</div>
+            <div class="card-header text-center p-2">New Search</div>
             <label for="city-search" class="form-label">Enter City Name</label>
             <input type="city" class="form-control" id="city-input" required />
-            <!-- <label for="state-search" class="form-label">Enter State</label>
-            <input type="city" class="form-control" id="state-input" required /> -->
-            <div class="form-floating">
+            <div class="form-floating p-2">
               <select
                 class="form-select"
                 id="state-input"
@@ -64,7 +62,7 @@
                 <option value="Louisiana">LA</option>
                 <option value="Maine">ME</option>
                 <option value="Maryland">MD</option>
-                <option value="Massachusetts">MS</option>
+                <option value="Massachusetts">MA</option>
                 <option value="Michigan">MI</option>
                 <option value="Minnesota">MN</option>
                 <option value="Mississippi">MS</option>
@@ -96,7 +94,7 @@
                 <option value="Wyoming">WY</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-primary" id="search-submit">
+            <button type="submit" class="btn btn-primary p-2" id="search-submit">
               Submit
             </button>
           </form>
@@ -160,15 +158,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="d-flex m-3">
-        <button
-          type="button"
-          id="fetch-button"
-          class="btn btn-primary w-50 col"
-        >
-          API
-        </button>
-      </div> -->
     </div>
   </body>
 

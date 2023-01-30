@@ -23,3 +23,7 @@ h2 {
     color: aliceblue;
 }
 
+ul {
+   list-style-type: none;
+}
+

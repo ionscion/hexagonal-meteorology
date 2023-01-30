@@ -1,6 +1,8 @@
 let tableBody = document.getElementById("weather-table");
 let fetchButton = document.getElementById("fetch-button");
 let searchButton = document.getElementById("search-submit");
+let recentSearchUl = document.getElementById("recent-searches");
+
 let day1 = document.getElementById("day-1");
 let day2 = document.getElementById("day-2");
 let day3 = document.getElementById("day-3");
@@ -169,19 +171,27 @@ function clearPage() {
     currentId.textContent = "";
   }
 }
-//prevent duplicates
+
 // do search
 function searchSave(city, state) {
   let citySearches = JSON.parse(localStorage.getItem("city-searches")) || [];
-  citySearches.push(`${city},${state}`);
+  citySearches.push(`${city}, ${state}`);
   localStorage.setItem("city-searches", JSON.stringify(citySearches));
-
-//write the searches to the html box
-//search button
 }
 
-// fetchButton.addEventListener("click", getApi);
+function renderSearch() {
+  let storedData = JSON.parse(localStorage.getItem("city-searches"));
+  let uniqueData = [...new Set(storedData.map(x => x.toUpperCase()))];
 
-//need to use local storage to save past city search history
+  for (let i = 0; i < uniqueData.length; i++) {
+    let recentSearchLi = document.createElement("li");
+    recentSearchLi.textContent = uniqueData[i];
+    recentSearchUl.appendChild(recentSearchLi);
+  }
+}
 
-//need to clear fields upon submission of new data
+function init() {
+  renderSearch();
+}
+
+init();
