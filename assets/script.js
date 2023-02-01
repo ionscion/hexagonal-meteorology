@@ -23,22 +23,18 @@ function getApi(param1, param2) {
     })
     .then(function (data) {
       console.log(data);
-      //changed for loop to 1, data.length didn't work
       for (let i = 0; i < 1; i++) {
         let createTableRow = document.createElement("tr");
-        //city name
         let createCityRow = document.createElement("tr");
         let createCity = document.createElement("td");
         createCity.textContent = data.name;
         createCityRow.appendChild(createCity);
         createTableRow.appendChild(createCityRow);
-        //date
         let createDateRow = document.createElement("tr");
         let createDate = document.createElement("td");
         createDate.textContent = currentDay;
         createDateRow.appendChild(createDate);
         createTableRow.appendChild(createDateRow);
-        //icon
         let createIconRow = document.createElement("tr");
         let getIconText = data.weather[0].icon;
         let createIcon = document.createElement("img");
@@ -46,21 +42,18 @@ function getApi(param1, param2) {
         createIconRow.appendChild(createIcon);
         createIconRow.appendChild(createIcon);
         createTableRow.appendChild(createIconRow);
-        //temp
         let createTempRow = document.createElement("tr");
         let createTemp = document.createElement("td");
         createTemp.textContent = `Temperature: ${data.main.temp} F`;
         createTempRow.appendChild(createTemp);
         createTableRow.appendChild(createTempRow);
 
-        //wind speed
         let createWindRow = document.createElement("tr");
         let createWind = document.createElement("td");
         createWind.textContent = `Wind Speed: ${data.wind.speed} mph`;
         createWindRow.appendChild(createWind);
         createTableRow.appendChild(createWindRow);
 
-        //humidity
         let createHumidRow = document.createElement("tr");
         let createHumidity = document.createElement("td");
         createHumidity.textContent = `Humidity: ${data.main.humidity} %`;
@@ -78,20 +71,17 @@ function getApi(param1, param2) {
     .then(function (data) {
       console.log(data);
       let filteredData = data.list.filter((item, index) => {
-        return index > 0 && (index + 1) % 8 === 0 && index < 40;
+        return index >= 2 && index <= 35 && (index - 2) % 8 === 0;
       });
       console.log(filteredData);
       for (let i = 0; i < 5; i++) {
-        // const element = data[i];
         let currentId = document.getElementById(`day-${i + 1}`);
         let createTableRow = document.createElement("tr");
-        //date
         let createDateRow = document.createElement("tr");
         let createDate = document.createElement("td");
         createDate.textContent = `Date: ${filteredData[i].dt_txt.slice(0, 11)}`;
         createDateRow.appendChild(createDate);
         createTableRow.appendChild(createDateRow);
-        //icon
         let createIconRow = document.createElement("tr");
         let getIconText = filteredData[i].weather[0].icon;
         let createIcon = document.createElement("img");
@@ -99,19 +89,16 @@ function getApi(param1, param2) {
         createIconRow.appendChild(createIcon);
         createIconRow.appendChild(createIcon);
         createTableRow.appendChild(createIconRow);
-        //temp
         let createTempRow = document.createElement("tr");
         let createTemp = document.createElement("td");
         createTemp.textContent = `Temperature: ${filteredData[i].main.temp} F`;
         createTempRow.appendChild(createTemp);
         createTableRow.appendChild(createTempRow);
-        //wind speed
         let createWindRow = document.createElement("tr");
         let createWind = document.createElement("td");
         createWind.textContent = `Wind Speed: ${filteredData[i].wind.speed} mph`;
         createWindRow.appendChild(createWind);
         createTableRow.appendChild(createWindRow);
-        //humidity
         let createHumidRow = document.createElement("tr");
         let createHumidity = document.createElement("td");
         createHumidity.textContent = `Humidity: ${filteredData[i].main.humidity} %`;
@@ -125,11 +112,8 @@ function getApi(param1, param2) {
   longitude = [];
 }
 
-function getCityApi(e) {
-  // if (e) {
-  //   e.preventDefault();
-  // }
-  e.preventDefault();
+function getCityApi(event) {
+  event.preventDefault();
   let cityInput = document.getElementById("city-input");
   let selectedState = document.getElementById("state-input");
 
@@ -137,7 +121,7 @@ function getCityApi(e) {
   selectedState = selectedState.value;
   searchSave(cityInput, selectedState);
 
-  let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},${selectedState},US&limit=5&appid=326e6d35f7ebe093972477e3b80624aa`;
+  let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},${selectedState},US&limit=1&appid=326e6d35f7ebe093972477e3b80624aa`;
 
   fetch(cityUrl)
     .then(function (response) {
@@ -174,7 +158,6 @@ function clearPage() {
   }
 }
 
-// do search
 function searchSave(city, state) {
   let citySearches = JSON.parse(localStorage.getItem("city-searches")) || [];
   citySearches.push(`${city}, ${state}`);
@@ -201,15 +184,40 @@ searchButton.addEventListener("click", getCityApi);
 //   getApi(city,state,e)
 // });
 
+//ADD LAT AND LONG TO LOCAL STORAGE SOMEHOW
+
 recentSearchButton.addEventListener("click", function () {
   let selectedIndex = recentSearchSelect.selectedIndex;
   let selectedOption = recentSearchSelect.options[selectedIndex];
   let searchTarget = selectedOption.textContent;
   console.log(searchTarget);
   let [city, state] = searchTarget.split(", ");
-  console.log(typeof city);
-  console.log(state);
-  getCityApi(city, state);
+
+  let cityNewUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${state},US&limit=1&appid=326e6d35f7ebe093972477e3b80624aa`;
+
+  fetch(cityNewUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+
+      for (let i = 0; i < data.length; i++) {
+        const returnedName = data[i].name.toLowerCase();
+        if (city.toLowerCase().includes(returnedName)) {
+          lattitude.push(data[0].lat);
+          longitude.push(data[0].lon);
+        } else {
+          console.log("no city was found!");
+        }
+      }
+      getApi(lattitude, longitude);
+    })
+    .catch(function (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+  city.value = "";
+  state.value = "";
 });
 
 function init() {
