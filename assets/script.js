@@ -1,8 +1,8 @@
 let tableBody = document.getElementById("weather-table");
 let fetchButton = document.getElementById("fetch-button");
 let searchButton = document.getElementById("search-submit");
-let recentSearchUl = document.getElementById("recent-searches");
-
+let recentSearchSelect = document.getElementById("recent-searches");
+let recentSearchButton = document.getElementById("recent-search-btn");
 let day1 = document.getElementById("day-1");
 let day2 = document.getElementById("day-2");
 let day3 = document.getElementById("day-3");
@@ -126,6 +126,9 @@ function getApi(param1, param2) {
 }
 
 function getCityApi(e) {
+  // if (e) {
+  //   e.preventDefault();
+  // }
   e.preventDefault();
   let cityInput = document.getElementById("city-input");
   let selectedState = document.getElementById("state-input");
@@ -162,7 +165,6 @@ function getCityApi(e) {
   cityInput.value = "";
   selectedState.value = "";
 }
-searchButton.addEventListener("click", getCityApi);
 
 function clearPage() {
   tableBody.textContent = "";
@@ -181,14 +183,34 @@ function searchSave(city, state) {
 
 function renderSearch() {
   let storedData = JSON.parse(localStorage.getItem("city-searches"));
-  let uniqueData = [...new Set(storedData.map(x => x.toUpperCase()))];
+  let uniqueData = [...new Set(storedData.map((x) => x.toUpperCase()))];
 
   for (let i = 0; i < uniqueData.length; i++) {
-    let recentSearchLi = document.createElement("li");
-    recentSearchLi.textContent = uniqueData[i];
-    recentSearchUl.appendChild(recentSearchLi);
+    let recentSearchOption = document.createElement("option");
+    recentSearchOption.textContent = uniqueData[i];
+    recentSearchSelect.appendChild(recentSearchOption);
   }
 }
+searchButton.addEventListener("click", getCityApi);
+
+// searchButton.addEventListener("click", function() {
+//   let city = document.getElementById("city-input");
+//   let state = document.getElementById("state-input");
+//   city = city.value;
+//   state = state.value;
+//   getApi(city,state,e)
+// });
+
+recentSearchButton.addEventListener("click", function () {
+  let selectedIndex = recentSearchSelect.selectedIndex;
+  let selectedOption = recentSearchSelect.options[selectedIndex];
+  let searchTarget = selectedOption.textContent;
+  console.log(searchTarget);
+  let [city, state] = searchTarget.split(", ");
+  console.log(typeof city);
+  console.log(state);
+  getCityApi(city, state);
+});
 
 function init() {
   renderSearch();
