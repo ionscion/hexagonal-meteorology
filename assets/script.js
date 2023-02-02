@@ -112,13 +112,16 @@ function getApi(param1, param2) {
   longitude = [];
 }
 
-function getCityApi(event) {
-  event.preventDefault();
+function getCityApi(e) {
+  e.preventDefault();
   let cityInput = document.getElementById("city-input");
   let selectedState = document.getElementById("state-input");
 
   cityInput = cityInput.value;
   selectedState = selectedState.value;
+
+  // cityInput = city.value;
+  // selectedState = state.value;
   searchSave(cityInput, selectedState);
 
   let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},${selectedState},US&limit=1&appid=326e6d35f7ebe093972477e3b80624aa`;
@@ -181,10 +184,11 @@ searchButton.addEventListener("click", getCityApi);
 //   let state = document.getElementById("state-input");
 //   city = city.value;
 //   state = state.value;
-//   getApi(city,state,e)
+//   getCityApi(city,state)
 // });
 
 //ADD LAT AND LONG TO LOCAL STORAGE SOMEHOW
+//why didn't NY work
 
 recentSearchButton.addEventListener("click", function () {
   let selectedIndex = recentSearchSelect.selectedIndex;
@@ -200,6 +204,7 @@ recentSearchButton.addEventListener("click", function () {
       return response.json();
     })
     .then(function (data) {
+      console.log("data from recent search below");
       console.log(data);
 
       for (let i = 0; i < data.length; i++) {
@@ -219,6 +224,10 @@ recentSearchButton.addEventListener("click", function () {
   city.value = "";
   state.value = "";
 });
+
+function handleForm(event) {
+  event.preventDefault();
+}
 
 function init() {
   renderSearch();
