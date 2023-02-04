@@ -13,7 +13,6 @@ let lattitude = [];
 let longitude = [];
 
 function getApi() {
-
   clearPage();
   let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lattitude}&lon=${longitude}&appid=326e6d35f7ebe093972477e3b80624aa&units=imperial`;
   let requestUrl2 = `https://api.openweathermap.org/data/2.5/weather?lat=${lattitude}&lon=${longitude}&appid=326e6d35f7ebe093972477e3b80624aa&units=imperial`;
@@ -127,7 +126,7 @@ function getCityApi(evt) {
 
   cityInput = cityInput.value;
   selectedState = selectedState.value;
-  
+
   if (cityInput === "New York") {
     cityInput = "City of New York";
   }
@@ -190,17 +189,6 @@ function renderSearch() {
 }
 searchButton.addEventListener("click", getCityApi);
 
-// searchButton.addEventListener("click", function(evt) {
-
-//   let city = document.getElementById("city-input");
-//   let state = document.getElementById("state-input");
-//   city = city.value;
-//   state = state.value;
-//   getCityApi(city,state,evt)
-// });
-
-//ADD LAT AND LONG TO LOCAL STORAGE SOMEHOW
-
 recentSearchButton.addEventListener("click", function () {
   let selectedIndex = recentSearchSelect.selectedIndex;
   let selectedOption = recentSearchSelect.options[selectedIndex];
@@ -235,10 +223,6 @@ recentSearchButton.addEventListener("click", function () {
   city.value = "";
   state.value = "";
 });
-
-function handleForm(event) {
-  event.preventDefault();
-}
 
 function init() {
   renderSearch();

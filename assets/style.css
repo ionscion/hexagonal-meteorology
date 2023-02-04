@@ -1,29 +1,51 @@
 * {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 
 header {
-    display: flex;
-    justify-content: flex-end;
-    padding: 1em;
-    color:aliceblue;
-    background: linear-gradient(blue, blueviolet);
+  display: flex;
+  justify-content: flex-end;
+  padding: 1em;
+  color: aliceblue;
+  background: linear-gradient(blue, blueviolet);
+}
+
+.header-div {
+  width: 100vw !important;
+}
+
+.search-div {
+  height: fit-content;
 }
 
 body {
-    background-color: #7B7372;
+  background-color: #7b7372;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 table {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
+}
 
 h2 {
-    color: aliceblue;
+  color: aliceblue;
 }
 
 ul {
-   list-style-type: none;
+  list-style-type: none;
 }
 
+@media screen and (max-width: 850px) {
+  #top-box {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #five-day {
+    flex-direction: column;
+    align-items: center;
+  }
+}
