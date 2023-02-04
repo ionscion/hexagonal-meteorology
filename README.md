@@ -32,71 +32,18 @@ WHEN I click on a city in the search history
 THEN I am again presented with current and future conditions for that city
 ```
 
-## Mock-Up
+## Notes
+Application was created with data pull from OpenWeather API. There are functions which first search for the entered city and state to find their 
+lattitude and longitude and then fetch the corresponding weather data and 5 day forecast for that location. User should select their corresponding state from the "select state" dropdown menu before hitting search. Both current weather and the 5 day forecasts include information such as current temperature, icon of the conditions, wind speed and humidity.
 
-The following image shows the web application's appearance and functionality:
+Local storage was implemented to store the recent searches in a dropdown menu. The user will just need to click the corresponding recent search in order to pull in the data for that city again. 
 
-![The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for Atlanta.](./Assets/06-server-side-apis-homework-demo.png)
+Page has also been designed to be responsive for consumption on mobile devices. 
 
-## Grading Requirements
+## Screenshot
+Screenshot of final app demonstration:
+!["final screenshot"](./assets/weatherapp-final.png)
 
-> **Note**: If a Challenge assignment submission is marked as “0”, it is considered incomplete and will not count towards your graduation requirements. Examples of incomplete submissions include the following:
->
-> * A repository that has no code
->
-> * A repository that includes a unique name but nothing else
->
-> * A repository that includes only a README file but nothing else
->
-> * A repository that only includes starter code
-
-This Challenge is graded based on the following criteria: 
-
-### Technical Acceptance Criteria: 40%
-
-* Satisfies all of the above acceptance criteria plus the following:
-
-    * Uses the OpenWeather API to retrieve weather data.
-
-    * Uses `localStorage` to store persistent data.
-
-### Deployment: 32%
-
-* Application deployed at live URL.
-
-* Application loads with no errors.
-
-* Application GitHub URL submitted.
-
-* GitHub repository that contains application code.
-
-### Application Quality: 15%
-
-* Application user experience is intuitive and easy to navigate.
-
-* Application user interface style is clean and polished.
-
-* Application resembles the mock-up functionality provided in the Challenge instructions.
-
-### Repository Quality: 13%
-
-* Repository has a unique name.
-
-* Repository follows best practices for file structure and naming conventions.
-
-* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages.
-
-* Repository contains quality readme file with description, screenshot, and link to deployed application.
-
-## Review
-
-You are required to submit BOTH of the following for review:
-
-* The URL of the functional, deployed application.
-
-* The URL of the GitHub repository. Give the repository a unique name and include a readme describing the project.
-
-- - -
-© 2023 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
+## Deployed Link
+Link to deployed page:
+https://ionscion.github.io/hexagonal-meteorology/

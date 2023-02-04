@@ -37,7 +37,7 @@ function getApi() {
         let createIconRow = document.createElement("tr");
         let getIconText = data.weather[0].icon;
         let createIcon = document.createElement("img");
-        createIcon.src = `http://openweathermap.org/img/wn/${getIconText}@2x.png`;
+        createIcon.src = `https://openweathermap.org/img/wn/${getIconText}@2x.png`;
         createIconRow.appendChild(createIcon);
         createIconRow.appendChild(createIcon);
         createTableRow.appendChild(createIconRow);
@@ -88,7 +88,7 @@ function getApi() {
         let createIconRow = document.createElement("tr");
         let getIconText = filteredData[i].weather[0].icon;
         let createIcon = document.createElement("img");
-        createIcon.src = `http://openweathermap.org/img/wn/${getIconText}@2x.png`;
+        createIcon.src = `https://openweathermap.org/img/wn/${getIconText}@2x.png`;
         createIconRow.appendChild(createIcon);
         createIconRow.appendChild(createIcon);
         createTableRow.appendChild(createIconRow);
@@ -127,7 +127,7 @@ function getCityApi(evt) {
     cityInput = "City of New York";
   }
 
-  let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},${selectedState},US&limit=1&appid=326e6d35f7ebe093972477e3b80624aa`;
+  let cityUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityInput},${selectedState},US&limit=1&appid=326e6d35f7ebe093972477e3b80624aa`;
 
   fetch(cityUrl)
     .then(function (response) {
@@ -188,7 +188,7 @@ recentSearchButton.addEventListener("click", function () {
   let selectedOption = recentSearchSelect.options[selectedIndex];
   let searchTarget = selectedOption.textContent;
   let [city, state] = searchTarget.split(", ");
-  let cityNewUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${state},US&limit=1&appid=326e6d35f7ebe093972477e3b80624aa`;
+  let cityNewUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city},${state},US&limit=1&appid=326e6d35f7ebe093972477e3b80624aa`;
 
   fetch(cityNewUrl)
     .then(function (response) {
