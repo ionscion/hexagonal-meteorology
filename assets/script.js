@@ -12,7 +12,8 @@ let currentDay = dayjs().format("YYYY-MM-DD");
 let lattitude = [];
 let longitude = [];
 
-function getApi(param1, param2) {
+function getApi() {
+
   clearPage();
   let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lattitude}&lon=${longitude}&appid=326e6d35f7ebe093972477e3b80624aa&units=imperial`;
   let requestUrl2 = `https://api.openweathermap.org/data/2.5/weather?lat=${lattitude}&lon=${longitude}&appid=326e6d35f7ebe093972477e3b80624aa&units=imperial`;
@@ -112,16 +113,25 @@ function getApi(param1, param2) {
   longitude = [];
 }
 
-function getCityApi(e) {
-  e.preventDefault();
+function getCityApi2(city, state, evt) {
+  evt.preventDefault();
+  console.log(evt);
+  console.log(city);
+  console.log(state);
+}
+
+function getCityApi(evt) {
+  evt.preventDefault();
   let cityInput = document.getElementById("city-input");
   let selectedState = document.getElementById("state-input");
 
   cityInput = cityInput.value;
   selectedState = selectedState.value;
+  
+  if (cityInput === "New York") {
+    cityInput = "City of New York";
+  }
 
-  // cityInput = city.value;
-  // selectedState = state.value;
   searchSave(cityInput, selectedState);
 
   let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},${selectedState},US&limit=1&appid=326e6d35f7ebe093972477e3b80624aa`;
@@ -131,6 +141,7 @@ function getCityApi(e) {
       return response.json();
     })
     .then(function (data) {
+      console.log(`returned city data below`);
       console.log(data);
 
       for (let i = 0; i < data.length; i++) {
@@ -179,16 +190,16 @@ function renderSearch() {
 }
 searchButton.addEventListener("click", getCityApi);
 
-// searchButton.addEventListener("click", function() {
+// searchButton.addEventListener("click", function(evt) {
+
 //   let city = document.getElementById("city-input");
 //   let state = document.getElementById("state-input");
 //   city = city.value;
 //   state = state.value;
-//   getCityApi(city,state)
+//   getCityApi(city,state,evt)
 // });
 
 //ADD LAT AND LONG TO LOCAL STORAGE SOMEHOW
-//why didn't NY work
 
 recentSearchButton.addEventListener("click", function () {
   let selectedIndex = recentSearchSelect.selectedIndex;
