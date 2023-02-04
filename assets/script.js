@@ -8,7 +8,7 @@ let day2 = document.getElementById("day-2");
 let day3 = document.getElementById("day-3");
 let day4 = document.getElementById("day-4");
 let day5 = document.getElementById("day-5");
-let currentDay = dayjs().format("YYYY-MM-DD");
+let currentDay = dayjs().format("dddd, YYYY-MM-DD");
 let lattitude = [];
 let longitude = [];
 
@@ -22,7 +22,6 @@ function getApi() {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
       for (let i = 0; i < 1; i++) {
         let createTableRow = document.createElement("tr");
         let createCityRow = document.createElement("tr");
@@ -69,17 +68,21 @@ function getApi() {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
       let filteredData = data.list.filter((item, index) => {
         return index >= 2 && index <= 35 && (index - 2) % 8 === 0;
       });
-      console.log(filteredData);
       for (let i = 0; i < 5; i++) {
+        let date = filteredData[i].dt_txt.slice(0, 11);
+        let newDate = dayjs(date).format("dddd");
         let currentId = document.getElementById(`day-${i + 1}`);
+        let currentPlaceholder = document.getElementById(`day-place-${i + 1}`);
+        let createDateHeader = document.createElement("p");
+        createDateHeader.textContent = newDate;
+        currentPlaceholder.appendChild(createDateHeader);
         let createTableRow = document.createElement("tr");
         let createDateRow = document.createElement("tr");
         let createDate = document.createElement("td");
-        createDate.textContent = `Date: ${filteredData[i].dt_txt.slice(0, 11)}`;
+        createDate.textContent = `Date: ${date}`;
         createDateRow.appendChild(createDate);
         createTableRow.appendChild(createDateRow);
         let createIconRow = document.createElement("tr");
@@ -112,13 +115,6 @@ function getApi() {
   longitude = [];
 }
 
-function getCityApi2(city, state, evt) {
-  evt.preventDefault();
-  console.log(evt);
-  console.log(city);
-  console.log(state);
-}
-
 function getCityApi(evt) {
   evt.preventDefault();
   let cityInput = document.getElementById("city-input");
@@ -127,11 +123,9 @@ function getCityApi(evt) {
   cityInput = cityInput.value;
   selectedState = selectedState.value;
 
-  if (cityInput === "New York") {
+  if (cityInput === "New York" || cityInput === "new york") {
     cityInput = "City of New York";
   }
-
-  searchSave(cityInput, selectedState);
 
   let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},${selectedState},US&limit=1&appid=326e6d35f7ebe093972477e3b80624aa`;
 
@@ -140,9 +134,6 @@ function getCityApi(evt) {
       return response.json();
     })
     .then(function (data) {
-      console.log(`returned city data below`);
-      console.log(data);
-
       for (let i = 0; i < data.length; i++) {
         const returnedName = data[i].name.toLowerCase();
         if (cityInput.toLowerCase().includes(returnedName)) {
@@ -159,6 +150,7 @@ function getCityApi(evt) {
     .catch(function (error) {
       console.error("There was a problem with the fetch operation:", error);
     });
+  searchSave(cityInput, selectedState);
   cityInput.value = "";
   selectedState.value = "";
 }
@@ -168,6 +160,8 @@ function clearPage() {
   for (let i = 0; i < 5; i++) {
     let currentId = document.getElementById(`day-${i + 1}`);
     currentId.textContent = "";
+    let currentPlaceholder = document.getElementById(`day-place-${i + 1}`);
+    currentPlaceholder.textContent = "";
   }
 }
 
@@ -193,9 +187,7 @@ recentSearchButton.addEventListener("click", function () {
   let selectedIndex = recentSearchSelect.selectedIndex;
   let selectedOption = recentSearchSelect.options[selectedIndex];
   let searchTarget = selectedOption.textContent;
-  console.log(searchTarget);
   let [city, state] = searchTarget.split(", ");
-
   let cityNewUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${state},US&limit=1&appid=326e6d35f7ebe093972477e3b80624aa`;
 
   fetch(cityNewUrl)
@@ -203,9 +195,6 @@ recentSearchButton.addEventListener("click", function () {
       return response.json();
     })
     .then(function (data) {
-      console.log("data from recent search below");
-      console.log(data);
-
       for (let i = 0; i < data.length; i++) {
         const returnedName = data[i].name.toLowerCase();
         if (city.toLowerCase().includes(returnedName)) {
